@@ -1,24 +1,8 @@
 #include "xml.hpp"
 #include <iostream>
 
-XMLExpression::XMLExpression(std::string root_name, std::list<::XMLExpression> root_subexpressions,std::unordered_map<std::string, std::string> root_attributes)
-{
-    root_name_ = root_name;
-    root_subexpressions_ = root_subexpressions;
-    root_attributes_ = root_attributes;
-}
 
-XMLExpression::XMLExpression() {}
-/*
-XMLExpression::~XMLExpression()
-{
-    delete root;
-}
-*/
-SingleTag::SingleTag() 
-{
 
-}
 
 SingleTag::SingleTag(std::string name, std::unordered_map<std::string, std::string> attributes)
 {
@@ -26,9 +10,6 @@ SingleTag::SingleTag(std::string name, std::unordered_map<std::string, std::stri
     attributes_ = attributes;
 }
 
-SingleTag::~SingleTag()
-{
-}
 
 DoubleTag::DoubleTag(std::string name, std::list<::XMLExpression> subexpressions, std::unordered_map<std::string, std::string> attributes)
 {
@@ -38,6 +19,14 @@ DoubleTag::DoubleTag(std::string name, std::list<::XMLExpression> subexpressions
 }
 
 DoubleTag::~DoubleTag()
+{
+}
+
+RootTag::RootTag(std::string name, std::list<::XMLExpression> subexpressions, std::unordered_map<std::string, std::string> attributes) : DoubleTag(name, subexpressions, attributes)
+{
+}
+
+RootTag::~RootTag()
 {
 }
 
@@ -52,16 +41,21 @@ Text::~Text()
 
 std::ostream& operator<<(std::ostream& os, const XMLExpression& e)
 {
+    e.print(os);
+    return os;
+}
+
+void RootTag::print(std::ostream& os) const
+{
     
    std::cout<<"hopla2\n";
-    tag_begin(os, e.root_name_, e.root_attributes_);
-    for (const auto& expr : e.root_subexpressions_ )
+    tag_begin(os, this->name_, this->attributes_);
+    for (const auto& expr : this->subexpressions_ )
     {
         os<<'\t';
         os<<expr;
     }
-    tag_end(os, e.root_name_);
-    return os;
+    tag_end(os, this->name_);
 }
 
 /*
@@ -82,37 +76,34 @@ std::istream& operator>>(std::istream& is, const XMLExpression& e)
     return is;
 }
 */
-std::ostream& operator<<(std::ostream& os, const Text& te)
+void Text::print(std::ostream& os) const
 {
     std::cout<<"hopla\n";
-    os<<te.content_;
-    return os;
+    os<<this->content_;
 }
 
-std::ostream& operator<<(std::ostream& os, const SingleTag& st)
+void SingleTag::print(std::ostream& os) const
 {
     os<<lt;
-    os<<st.name_;
-    for (auto p : st.attributes_)
+    os<<this->name_;
+    for (auto p : this->attributes_)
     {
         os<<attr(p.first, p.second);
     }
     os<<slash;
     os<<gt;
     os<<std::endl;
-    return os;
 }
 
-std::ostream& operator<<(std::ostream& os, const DoubleTag& dt)
+void DoubleTag::print(std::ostream& os) const
 {
-    tag_begin(os, dt.name_, dt.attributes_);
-    for (const auto& expr : dt.subexpressions_ )
+    tag_begin(os, this->name_, this->attributes_);
+    for (const auto& expr : this->subexpressions_ )
     {
         os<<'\t';
         os<<expr;
     }
-    tag_end(os, dt.name_);
-    return os;
+    tag_end(os, this->name_);
 }
 
 void tag_begin(std::ostream& os, const std::string& name, const std::unordered_map<std::string, std::string>& attributes)

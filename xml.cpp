@@ -10,19 +10,20 @@ SingleTag::SingleTag(std::string name, std::unordered_map<std::string, std::stri
     attributes_ = attributes;
 }
 
-
-DoubleTag::DoubleTag(std::string name, std::list<::XMLExpression> subexpressions, std::unordered_map<std::string, std::string> attributes)
+SingleTag::~SingleTag()
 {
-    name_ = name;
+}
+
+DoubleTag::DoubleTag(std::string name, std::list<::XMLExpression*> subexpressions, std::unordered_map<std::string, std::string> attributes) : SingleTag(name, attributes)
+{
     subexpressions_ = subexpressions;
-    attributes_ = attributes;
 }
 
 DoubleTag::~DoubleTag()
 {
 }
 
-RootTag::RootTag(std::string name, std::list<::XMLExpression> subexpressions, std::unordered_map<std::string, std::string> attributes) : DoubleTag(name, subexpressions, attributes)
+RootTag::RootTag(std::string name, std::list<::XMLExpression*> subexpressions, std::unordered_map<std::string, std::string> attributes) : DoubleTag(name, subexpressions, attributes)
 {
 }
 
@@ -41,14 +42,25 @@ Text::~Text()
 
 std::ostream& operator<<(std::ostream& os, const XMLExpression& e)
 {
+  // std::cout<<"hopla5\n";
     e.print(os);
     return os;
 }
+/*
+std::ostream& operator<<(std::ostream& os, const RootTag& rt)
+{
+   std::cout<<"hopla6\n";
+    
+    rt.print(os);
+    return os;
+}*/
+
+
 
 void RootTag::print(std::ostream& os) const
 {
     
-   std::cout<<"hopla2\n";
+  // std::cout<<"hopla2\n";
     tag_begin(os, this->name_, this->attributes_);
     for (const auto& expr : this->subexpressions_ )
     {
@@ -78,12 +90,13 @@ std::istream& operator>>(std::istream& is, const XMLExpression& e)
 */
 void Text::print(std::ostream& os) const
 {
-    std::cout<<"hopla\n";
+    //std::cout<<"hopla\n";
     os<<this->content_;
 }
 
 void SingleTag::print(std::ostream& os) const
 {
+   // std::cout<<"hopla3\n";
     os<<lt;
     os<<this->name_;
     for (auto p : this->attributes_)
@@ -97,6 +110,7 @@ void SingleTag::print(std::ostream& os) const
 
 void DoubleTag::print(std::ostream& os) const
 {
+    //std::cout<<"hopla4\n";
     tag_begin(os, this->name_, this->attributes_);
     for (const auto& expr : this->subexpressions_ )
     {

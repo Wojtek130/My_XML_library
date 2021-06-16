@@ -14,7 +14,7 @@ public:
     //XMLExpression() {};
     virtual ~XMLExpression() {};
     friend std::ostream& operator<<(std::ostream& os, const XMLExpression& e);
-    virtual void print(std::ostream& os)  const ;
+    virtual void print(std::ostream& os)  const =0;
 };
 
 class SingleTag : public XMLExpression
@@ -26,20 +26,20 @@ protected:
 public:
     SingleTag(std::string name, std::unordered_map<std::string, std::string> attributes);
     ~SingleTag();
-    void print(std::ostream& os) const;
+    virtual void print(std::ostream& os) const;
 
 };
 
 class DoubleTag : public SingleTag
 {
 protected:
-    std::list<::XMLExpression> subexpressions_;
+    std::list<::XMLExpression*> subexpressions_;
 
 public:
-    DoubleTag(std::string name, std::list<::XMLExpression> subexpressions, std::unordered_map<std::string, std::string> attributes);
+    DoubleTag(std::string name, std::list<::XMLExpression*> subexpressions, std::unordered_map<std::string, std::string> attributes);
     ~DoubleTag();
     //friend std::ostream& operator<<(std::ostream& os, const DoubleTag& dt);
-    void print(std::ostream& os) const;
+    virtual void print(std::ostream& os) const;
 
 };
 
@@ -48,9 +48,11 @@ class RootTag : public DoubleTag
 private:
     /* data */
 public:
-    RootTag(std::string name, std::list<::XMLExpression> subexpressions, std::unordered_map<std::string, std::string> attributes);
+    RootTag(std::string name, std::list<::XMLExpression*> subexpressions, std::unordered_map<std::string, std::string> attributes);
     ~RootTag();
-    void print(std::ostream& os)  const;
+    virtual void print(std::ostream& os)  const;
+   // friend std::ostream& operator<<(std::ostream& os, const RootTag& rt);
+
 };
 
 
@@ -63,7 +65,7 @@ public:
     Text(std::string content);
     ~Text();
     //friend std::ostream& operator<<(std::ostream& os, const Text& te);
-    void print(std::ostream& os) const;
+    virtual void print(std::ostream& os) const;
 
 };
 

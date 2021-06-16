@@ -1,9 +1,12 @@
 #include "manipulators.hpp"
+ 
 
 std::istream &cleanline(std::istream &is)
 {
-    while(is && is.get() != '\n')
+    char c = is.get();
+    while(is && c != '\n' && c!= EOF )
     {
+        c = is.get();
     }
     return is;
 }

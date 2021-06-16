@@ -10,8 +10,9 @@
 
 int main()
 {
-    
-    //std::cin>>cleanline;
+    //std::string s;
+    //std::cin>>cleanline>>s;
+    //std::cout<<s;
     //std::cin>>ignore(3);
     //std::cout<<amp;
     //std::cout<<quot;

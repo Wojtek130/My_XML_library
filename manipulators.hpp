@@ -7,6 +7,7 @@ std::ostream &amp(std::ostream &os);
 std::ostream &lt(std::ostream &os);
 std::ostream &gt(std::ostream &os);
 std::ostream &quot(std::ostream &os);
+std::ostream &slash(std::ostream &os);
 
 struct ignore 
 {

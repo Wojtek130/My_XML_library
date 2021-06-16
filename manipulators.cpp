@@ -7,7 +7,18 @@ std::istream &cleanline(std::istream &is)
     }
     return is;
 }
+/*
+std::istream &addspace(std::istream &is)
+{
+    char c = is.get() != '\n';
+    while(is && c != '\n')
+    {
+        is<<c;
 
+    }
+    return is;
+}
+*/
 std::ostream &amp(std::ostream &os)
 {
     os<<"&";
@@ -29,6 +40,12 @@ std::ostream &gt(std::ostream &os)
 std::ostream &quot(std::ostream &os)
 {
     os<<"\"";
+    return os;
+}
+
+std::ostream &slash(std::ostream &os)
+{
+    os<<"/";
     return os;
 }
 

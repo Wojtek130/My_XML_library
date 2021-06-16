@@ -24,7 +24,7 @@ int main()
     };
     std::list<XMLExpression*> empty_list;
     std::unordered_map<std::string, std::string> empty_map;
-    DoubleTag *dt3 = new DoubleTag("Forwarded", std::list<XMLExpression*>{new Text("ann@email.com")}, empty_map);
+    DoubleTag *dt3 = new DoubleTag("Forwarded", std::list<XMLExpression*>{new Text("ann@email.com"),}, empty_map);
     SingleTag *st1 = new SingleTag("deadline", u2);
     DoubleTag *dt1 = new DoubleTag("Topic", std::list<XMLExpression*>{new Text("cpp")}, empty_map);
     DoubleTag *dt2 = new DoubleTag("From", std::list<XMLExpression*>{new Text("john@email.com"), dt3}, empty_map);
@@ -42,5 +42,6 @@ int main()
     };
     XMLExpression* e1 = new RootTag("parent", l,std::unordered_map<std::string, std::string>{{"RED","#FF0000"},});
     std::cout<<e1;
-    
+
+    delete e1;    
 }

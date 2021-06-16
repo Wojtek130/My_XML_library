@@ -21,6 +21,10 @@ DoubleTag::DoubleTag(std::string name, std::list<::XMLExpression*> subexpression
 
 DoubleTag::~DoubleTag()
 {
+    for (const auto& expr : this->subexpressions_ )
+    { 
+        delete expr;
+    }
 }
 
 RootTag::RootTag(std::string name, std::list<::XMLExpression*> subexpressions, std::unordered_map<std::string, std::string> attributes) : DoubleTag(name, subexpressions, attributes)

@@ -62,15 +62,13 @@ void RootTag::print(std::ostream& os) const
     
   // std::cout<<"hopla2\n";
     tag_begin(os, this->name_, this->attributes_);
+    os<<std::endl;
+
     for (const auto& expr : this->subexpressions_ )
     {
-        if (dynamic_cast<Text*>(expr)) 
-        {
-            os<<expr;
-            continue;
-        }
         os<<'\t';
         os<<expr;
+        os<<std::endl;
     }
     tag_end(os, this->name_);
 }
@@ -97,6 +95,7 @@ void Text::print(std::ostream& os) const
 {
     //std::cout<<"hopla\n";
     os<<this->content_;
+    //os<<std::endl;
 }
 
 void SingleTag::print(std::ostream& os) const
@@ -110,7 +109,6 @@ void SingleTag::print(std::ostream& os) const
     }
     os<<slash;
     os<<gt;
-    os<<std::endl;
 }
 
 void DoubleTag::print(std::ostream& os) const
@@ -118,16 +116,8 @@ void DoubleTag::print(std::ostream& os) const
     //std::cout<<"hopla4\n";
     tag_begin(os, this->name_, this->attributes_);
     for (const auto& expr : this->subexpressions_ )
-    {
-        if (dynamic_cast<Text*>(expr)) 
-        {
-            os<<expr;
-            continue;
-        }
-
-        os<<'\t';
+    { 
         os<<expr;
-        os<<std::endl;
     }
     tag_end(os, this->name_);
 }
@@ -141,15 +131,13 @@ void tag_begin(std::ostream& os, const std::string& name, const std::unordered_m
         os<<attr(p.first, p.second);
     }
     os<<gt;
-    os<<std::endl;
 }
 
 void tag_end(std::ostream& os, const std::string& name)
 {
     os<<lt;
-    os<<name;
     os<<slash;
+    os<<name;
     os<<gt;
-    os<<std::endl;
 }
 

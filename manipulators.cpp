@@ -61,6 +61,6 @@ std::istream& operator>>(std::istream&is, const ignore &ig)
 
 std::ostream& operator<<(std::ostream&os, const attr &at)
 { 
-    os<<" "<<at.key_<<"="<<at.value_;
+    os<<" "<<at.key_<<"="<<quot<<at.value_<<quot;
     return os;
 }

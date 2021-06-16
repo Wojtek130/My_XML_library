@@ -40,10 +40,10 @@ Text::~Text()
 {
 }
 
-std::ostream& operator<<(std::ostream& os, const XMLExpression& e)
+std::ostream& operator<<(std::ostream& os, XMLExpression* e)
 {
   // std::cout<<"hopla5\n";
-    e.print(os);
+    e->print(os);
     return os;
 }
 /*
@@ -64,6 +64,11 @@ void RootTag::print(std::ostream& os) const
     tag_begin(os, this->name_, this->attributes_);
     for (const auto& expr : this->subexpressions_ )
     {
+        if (dynamic_cast<Text*>(expr)) 
+        {
+            os<<expr;
+            continue;
+        }
         os<<'\t';
         os<<expr;
     }
@@ -114,8 +119,15 @@ void DoubleTag::print(std::ostream& os) const
     tag_begin(os, this->name_, this->attributes_);
     for (const auto& expr : this->subexpressions_ )
     {
+        if (dynamic_cast<Text*>(expr)) 
+        {
+            os<<expr;
+            continue;
+        }
+
         os<<'\t';
         os<<expr;
+        os<<std::endl;
     }
     tag_end(os, this->name_);
 }

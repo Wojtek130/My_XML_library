@@ -13,7 +13,7 @@ private:
 public:
     //XMLExpression() {};
     virtual ~XMLExpression() {};
-    friend std::ostream& operator<<(std::ostream& os, const XMLExpression& e);
+    friend std::ostream& operator<<(std::ostream& os,XMLExpression* e);
     virtual void print(std::ostream& os)  const =0;
 };
 

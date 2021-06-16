@@ -29,6 +29,6 @@ int main()
         {"BLUE","#0000FF"}
     };
     XMLExpression* e1 = new RootTag("parent", l,std::unordered_map<std::string, std::string>{{"RED","#FF0000"},});
-    std::cout<<*e1;
+    std::cout<<e1;
     
 }
